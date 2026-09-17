@@ -1,362 +1,208 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="google-site-verification" content="tEUfD5JXe0fUHtLrs-DiAhnzp45VleWraSXslYgBPMo" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a0a0a">
   <title>Minecraft Addons Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: linear-gradient(180deg, #0a1f0a 0%, #051505 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a url('https://images.wallpapersden.com/image/download/wither-storm-minecraft-story-mode_bGdsbWaUmZqaraWkpJRmbmdlrWZlbWU.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
       min-height: 100vh;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      color: #c8e6c8;
-      padding: 16px 12px 40px;
     }
-
-    .header {
-      text-align: center;
-      margin-bottom: 22px;
-      padding-top: 10px;
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: -1;
     }
-
-    .logo {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 22px;
-      line-height: 1.4;
-      color: #4cff4c;
-      text-shadow:
-        0 0 8px rgba(76, 255, 76, 0.6),
-        2px 2px 0 #0a3a0a;
-      letter-spacing: 1px;
-    }
-
-    .logo span {
-      display: block;
-      font-size: 18px;
-      margin-top: 4px;
-    }
-
-    .search-box {
-      background: #1a2e1a;
-      border: 2px solid #2a4a2a;
-      border-radius: 14px;
-      padding: 14px 18px;
-      margin-bottom: 22px;
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
     }
-
+    .header {
+      background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(10,10,10,0.7) 100%);
+      padding: 22px 16px 14px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .header h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 12px;
+      color: #4CAF50;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+      text-shadow: 0 0 12px #4CAF50;
+    }
+    .header h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 16px;
+      color: #4CAF50;
+      margin-bottom: 14px;
+      text-shadow: 0 0 14px #4CAF50;
+    }
     .search-box input {
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #a0c8a0;
-      font-size: 15px;
       width: 100%;
-      font-family: inherit;
+      padding: 12px 15px;
+      border: 1.5px solid #333;
+      border-radius: 12px;
+      background: rgba(20,20,20,0.9);
+      color: white;
+      font-size: 15px;
+      outline: none;
     }
-
-    .search-box input::placeholder {
-      color: #5a7a5a;
-    }
-
+    .search-box input::placeholder { color: #777; }
     .addons-list {
+      flex: 1;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
-
     .addon-card {
-      background: #152515;
-      border: 2px solid #2a4a2a;
+      background: rgba(18,18,18,0.92);
       border-radius: 16px;
-      padding: 16px;
-      position: relative;
-      transition: transform 0.15s, border-color 0.15s;
+      padding: 14px;
+      border: 1.5px solid #2a2a2a;
+      display: flex;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
-
-    .addon-card:active {
-      transform: scale(0.98);
-      border-color: #3a6a3a;
+    .addon-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      background: #222;
+      flex-shrink: 0;
+      border: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
     }
-
-    .addon-header {
+    .addon-info { flex: 1; min-width: 0; }
+    .card-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 8px;
-      gap: 8px;
+      margin-bottom: 4px;
+      gap: 6px;
     }
-
-    .addon-name {
+    .card-header h3 {
       font-family: 'Press Start 2P', cursive;
-      font-size: 13px;
-      color: #4cff4c;
-      line-height: 1.35;
-      text-shadow: 1px 1px 0 #0a2a0a;
-    }
-
-    .tag {
       font-size: 10px;
+      line-height: 1.35;
+      color: #4CAF50;
+    }
+    .category {
+      font-size: 9px;
       font-weight: 700;
-      padding: 4px 8px;
+      padding: 2px 7px;
       border-radius: 20px;
-      background: #1e3a1e;
-      color: #7dff7d;
+      background: rgba(76, 175, 80, 0.18);
+      color: #4CAF50;
       white-space: nowrap;
-      border: 1px solid #2a5a2a;
-      letter-spacing: 0.5px;
     }
-
-    .tag.ui {
-      background: #1a2e3a;
-      color: #7dc8ff;
-      border-color: #2a4a6a;
-    }
-
-    .tag.weapons {
-      background: #3a1e1e;
-      color: #ff7d7d;
-      border-color: #5a2a2a;
-    }
-
-    .tag.camera {
-      background: #2a1e3a;
-      color: #c87dff;
-      border-color: #4a2a6a;
-    }
-
-    .tag.utility {
-      background: #3a3a1e;
-      color: #ffd07d;
-      border-color: #5a5a2a;
-    }
-
-    .version {
-      font-size: 12px;
-      color: #7a9a7a;
-      margin-bottom: 8px;
-    }
-
-    .desc {
-      font-size: 13.5px;
-      line-height: 1.45;
-      color: #b0d0b0;
-      margin-bottom: 14px;
-    }
-
-    .btn-download {
-      display: block;
+    .version { color: #888; font-size: 11px; margin-bottom: 6px; }
+    .description { color: #bbb; font-size: 12.5px; line-height: 1.4; margin-bottom: 10px; }
+    .download-btn {
       width: 100%;
-      background: #22c55e;
-      color: #0a1f0a;
-      font-weight: 800;
-      font-size: 15px;
-      text-align: center;
-      padding: 13px;
-      border-radius: 12px;
-      text-decoration: none;
+      padding: 10px;
       border: none;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 0 #15803d;
-      transition: all 0.1s;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #000;
+      background: #4CAF50;
+      cursor: pointer;
     }
-
-    .btn-download:active {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #15803d;
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 30px;
-      font-size: 11px;
-      color: #4a6a4a;
-    }
+    .footer { text-align: center; padding: 16px; color: #666; font-size: 12px; }
+    .empty { text-align: center; color: #666; margin-top: 40px; }
   </style>
 </head>
-
 <body>
-
-  <div class="header">
-    <div class="logo">
-      MINECRAFT
-      <span>ADDONS HUB</span>
-    </div>
-  </div>
-
-  <div class="search-box">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a7a5a" stroke-width="2.5">
-      <circle cx="11" cy="11" r="8"></circle>
-      <path d="m21 21-4.35-4.35"></path>
-    </svg>
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Buscar addon..."
-      oninput="filterAddons()"
-    />
-  </div>
-
-  <div class="addons-list" id="addonsList">
-
-    <!-- 1. Transparent Touch Buttons -->
-    <div class="addon-card" data-name="transparent touch buttons">
-      <div class="addon-header">
-        <div class="addon-name">TRANSPARENT TOUCH BUTTONS</div>
-        <div class="tag ui">UI</div>
+  <div class="app">
+    <header class="header">
+      <h1>MINECRAFT</h1>
+      <h2>ADDONS HUB</h2>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar addon..." autocomplete="off">
       </div>
-      <div class="version">Versión: 1.21+</div>
-      <div class="desc">
-        Botones táctiles transparentes para una interfaz más limpia y moderna.
-      </div>
-      <a href="https://mcpedl.com/transparent-touch-buttons/" class="btn-download" target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-    <!-- 2. Advanced Nichirin -->
-    <div class="addon-card" data-name="advanced nichirin">
-      <div class="addon-header">
-        <div class="addon-name">ADVANCED NICHIRIN</div>
-        <div class="tag weapons">WEAPONS</div>
-      </div>
-      <div class="version">Versión: 1.21+</div>
-      <div class="desc">
-        Espada Nichirin avanzada estilo Demon Slayer con efectos especiales.
-      </div>
-      <a href="https://mcpedl.com/advanced-nichirin/" class="btn-download" target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-    <!-- 3. White Outline -->
-    <div class="addon-card" data-name="white outline">
-      <div class="addon-header">
-        <div class="addon-name">WHITE OUTLINE</div>
-        <div class="tag ui">UI</div>
-      </div>
-      <div class="version">Versión: 1.21+</div>
-      <div class="desc">
-        Cambia el contorno de selección de bloques a blanco para mejor visibilidad.
-      </div>
-      <a href="https://mcpedl.com/" class="btn-download" target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-    <!-- 4. GoPro Perspective -->
-    <div class="addon-card" data-name="gopro perspective">
-      <div class="addon-header">
-        <div class="addon-name">GOPRO PERSPECTIVE</div>
-        <div class="tag camera">CAMERA</div>
-      </div>
-      <div class="version">Versión: 1.21+</div>
-      <div class="desc">
-        Añade 3 nuevas perspectivas de cámara (estacionaria, hombro izquierdo y derecho) perfectas para cinemáticas.
-      </div>
-      <a href="https://mcpedl.com/gopro-perspective/" class="btn-download" target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-    <!-- 5. Portal Gun -->
-    <div class="addon-card" data-name="portal gun">
-      <div class="addon-header">
-        <div class="addon-name">PORTAL GUN</div>
-        <div class="tag utility">UTILITY</div>
-      </div>
-      <div class="version">Versión: 1.1.1 (Actualizado)</div>
-      <div class="desc">
-        Portal Gun completo estilo Rick & Morty + Portal. Crea portales, viaja entre dimensiones y guarda ubicaciones. ¡Versión más reciente!
-      </div>
-      <a href="https://mcpedl.com/portal-gun-addon-tek/" class="btn-download" target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-    <!-- 6. Dynamic Lights -->
-    <div class="addon-card" data-name="dynamic lights">
-      <div class="addon-header">
-        <div class="addon-name">DYNAMIC LIGHTS</div>
-        <div class="tag utility">UTILITY</div>
-      </div>
-      <div class="version">Versión: 1.21+</div>
-      <div class="desc">
-        Las antorchas, linternas y objetos brillantes iluminan de verdad mientras los llevas. ¡Ya no más oscuridad!
-      </div>
-      <a href="https://mcpedl.com/" class="btn-download" target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-    <!-- 7. Effortless Building -->
-    <div class="addon-card" data-name="effortless building">
-      <div class="addon-header">
-        <div class="addon-name">EFFORTLESS BUILDING</div>
-        <div class="tag utility">UTILITY</div>
-      </div>
-      <div class="version">Versión: 1.21+</div>
-      <div class="desc">
-        Herramientas para construir más rápido y colocar bloques de forma mucho más sencilla.
-      </div>
-      <a href="https://www.curseforge.com/minecraft-bedrock/addons/effortless-building"
-         class="btn-download"
-         target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-    <!-- 8. CobbledRock -->
-    <div class="addon-card" data-name="cobbledrock">
-      <div class="addon-header">
-        <div class="addon-name">COBBLEDROCK</div>
-        <div class="tag utility">UTILITY</div>
-      </div>
-      <div class="version">Versión: 1.21+</div>
-      <div class="desc">
-        Añade nuevas posibilidades y bloques para tus construcciones de Minecraft Bedrock.
-      </div>
-      <a href="https://www.curseforge.com/minecraft-bedrock/addons/cobbledrock"
-         class="btn-download"
-         target="_blank">
-        DESCARGAR
-      </a>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    Minecraft Addons Hub • Hecho con 💚
+    </header>
+    <main class="addons-list" id="addonsList"></main>
+    <footer class="footer">
+      <p>Minecraft Addons Hub • Hecho con 💚</p>
+    </footer>
   </div>
 
   <script>
-    function filterAddons() {
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      const cards = document.querySelectorAll('.addon-card');
+    const addons = [
+      { name: "WITHER STORM", tags: ["wither","storm","boss","story mode","witherstorm"], category: "BOSS", version: "1.21+", description: "El temible Wither Storm de Minecraft Story Mode. Un jefe gigante que crece y destroza el mundo.", downloadUrl: "https://www.curseforge.com/minecraft-bedrock/addons/witheredworld" },
+      { name: "EFFORTLESS BUILDING", tags: ["ef","effortless","building","construir","bloques"], category: "BUILDING", version: "3.1", description: "Construye paredes, pisos, esferas y cilindros en segundos. El mejor addon de construcción.", downloadUrl: "https://www.curseforge.com/minecraft-bedrock/addons/effortless-building" },
+      { name: "COBBLEDROCK", tags: ["cb","cobble","cobbledrock","pokemon","poke"], category: "POKEMON", version: "1.3.1", description: "Addon completo de Pokémon. Captura, entrena y batalla con cientos de Pokémon.", downloadUrl: "https://mcpedl.com/cobbledrock/" },
+      { name: "GOPRO PERSPECTIVE", tags: ["gopro","go pro","camera","camara"], category: "CAMERA", version: "1.21+", description: "Nuevas perspectivas de cámara estilo GoPro para cinemáticas épicas.", downloadUrl: "https://www.mediafire.com/file/lst1kv92l9e3e9c/GoPro_Perspective_1.21%252B.mcaddon/file" },
+      { name: "PORTAL GUN", tags: ["portal","gun","rick","morty"], category: "ADVENTURE", version: "1.1.1", description: "Portal Gun de Rick & Morty. Crea portales y viaja entre dimensiones.", downloadUrl: "https://mcpedl.com/portal-gun-addon-tek/" },
+      { name: "TRANSPARENT TOUCH BUTTONS", tags: ["transparent","touch","buttons","botones"], category: "UI", version: "1.21+", description: "Botones táctiles transparentes para una interfaz más limpia.", downloadUrl: "https://modsfire.com/aaQV3Y4SqgjuL11" },
+      { name: "ADVANCED NICHIRIN", tags: ["nichirin","demon","slayer","espada"], category: "WEAPONS", version: "1.21+", description: "Espada Nichirin avanzada estilo Demon Slayer.", downloadUrl: "https://modsfire.com/bap4v047tYly195" },
+      { name: "WHITE OUTLINE", tags: ["white","outline","contorno"], category: "UI", version: "1.21+", description: "Contorno blanco al seleccionar bloques.", downloadUrl: "https://www.mediafire.com/file/ucm67z3yokaowb9/White_Outline_Selection_ByLordKennMC.mcpack/file" },
+      { name: "FPS COUNTER", tags: ["fps","counter","contador"], category: "UTILITY", version: "1.21+", description: "Contador de FPS dentro del juego.", downloadUrl: "https://modsfire.com/pB4b1ezCn3CN9ym" },
+      { name: "TRUE WEAPONS", tags: ["true","weapons","armas"], category: "WEAPONS", version: "1.21+", description: "Pack de armas con modelos y efectos épicos.", downloadUrl: "https://modsfire.com/8mEQGZpzLN90VrH" },
+      { name: "ESSENTIALS", tags: ["essentials","esencial","herramientas"], category: "UTILITY", version: "1.21+", description: "Herramientas esenciales: yunque reparable, teleports y más.", downloadUrl: "https://www.curseforge.com/minecraft-bedrock/addons/essentials" },
+      { name: "ACTIONS & STUFF", tags: ["actions","stuff","animaciones"], category: "ANIMATION", version: "1.21+", description: "Animaciones realistas para jugadores y mobs.", downloadUrl: "https://www.curseforge.com/minecraft-bedrock/addons/actions-stuff" }
+    ];
 
-      cards.forEach(card => {
-        const name = card.getAttribute('data-name');
+    const list = document.getElementById("addonsList");
+    const searchInput = document.getElementById("searchInput");
 
-        if (name.includes(query) || query === '') {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
+    function renderAddons(filter = "") {
+      list.innerHTML = "";
+      const q = filter.toLowerCase().trim();
+      const filtered = addons.filter(a => {
+        if (!q) return true;
+        if (a.name.toLowerCase().includes(q)) return true;
+        if (a.description.toLowerCase().includes(q)) return true;
+        if (a.category.toLowerCase().includes(q)) return true;
+        if (a.tags && a.tags.some(tag => tag.includes(q) || q.includes(tag))) return true;
+        return false;
+      });
+      if (filtered.length === 0) {
+        list.innerHTML = `<p class="empty">No se encontraron addons</p>`;
+        return;
+      }
+      filtered.forEach(addon => {
+        const card = document.createElement("div");
+        card.className = "addon-card";
+        card.innerHTML = `
+          <div class="addon-img">
+            ${addon.category === 'BOSS' ? '💀' : addon.category === 'BUILDING' ? '🏗️' : addon.category === 'POKEMON' ? '⚡' : addon.category === 'CAMERA' ? '📷' : addon.category === 'WEAPONS' ? '⚔️' : addon.category === 'UI' ? '🎛️' : '📦'}
+          </div>
+          <div class="addon-info">
+            <div class="card-header">
+              <h3>${addon.name}</h3>
+              <span class="category">${addon.category}</span>
+            </div>
+            <div class="version">Versión: ${addon.version}</div>
+            <p class="description">${addon.description}</p>
+            <button class="download-btn" onclick="window.open('${addon.downloadUrl}', '_blank')">DESCARGAR</button>
+          </div>
+        `;
+        list.appendChild(card);
       });
     }
+    searchInput.addEventListener("input", e => renderAddons(e.target.value));
+    renderAddons();
   </script>
-
 </body>
 </html>
